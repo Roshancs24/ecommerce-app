@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Product Details</title>
+
+    <!-- ✅ CORRECT CSS PATH -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+
+<body>
+
+    <nav>
+        <!-- ✅ CORRECT IMAGE PATH -->
+        <img src="../assets/images/logo.png" alt="Logo">
+
+        <a href="product-list.html">Products</a>
+        <a href="cart.html">Cart</a>
+    </nav>
+
+    <div class="container" id="details"></div>
+
+    <!-- ✅ CORRECT JS PATH -->
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/cart.js"></script>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+
+        fetch(`${API_BASE_URL}/products/${id}`)
+            .then(res => res.json())
+            .then(p => {
+                document.getElementById("details").innerHTML = `
+                <h2>${p.name}</h2>
+                <p>${p.description}</p>
+                <p><b>₹${p.price}</b></p>
+                <button onclick="addToCart(${p.id}, '${p.name}', ${p.price})">
+                    Add to Cart
+                </button>
+            `;
+            });
+    </script>
+
+</body>
+
+</html>
